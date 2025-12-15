@@ -1,0 +1,11 @@
+{
+  "buildCommand": "npx vite build --config vite.config.vercel.js",
+  "outputDirectory": "dist",
+  "framework": null,
+  "rewrites": [
+    { "source": "/api/contact", "destination": "/api/contact" },
+    { "source": "/api/newsletter", "destination": "/api/newsletter" },
+    { "source": "/api/reviews", "destination": "/api/reviews" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
