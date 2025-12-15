@@ -1,26 +1,23 @@
 import { motion } from "framer-motion";
-import beforeAfterImage from "@assets/generated_images/before_after_skincare_effect.png";
-import applyingImage from "@assets/generated_images/woman_applying_tone-up_cream.png";
-import glowImage from "@assets/generated_images/radiant_glass_skin_closeup.png";
 
 const effects = [
   {
     id: 1,
     title: "使用前後對比",
     description: "一抹即亮，打造自然透亮的偽素顏妝感",
-    image: beforeAfterImage,
+    image: "/images/before_after_skincare_effect.png",
   },
   {
     id: 2,
     title: "輕鬆上妝",
     description: "質地輕盈好推開，保養後輕輕塗抹即可",
-    image: applyingImage,
+    image: "/images/woman_applying_tone-up_cream.png",
   },
   {
     id: 3,
     title: "光澤透亮",
     description: "如雲朵般輕盈，展現自然光澤肌",
-    image: glowImage,
+    image: "/images/radiant_glass_skin_closeup.png",
   },
 ];
 
