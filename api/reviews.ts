@@ -9,13 +9,33 @@ const insertReviewSchema = z.object({
   content: z.string().min(1, '請輸入評價內容'),
 });
 
-function getCleanDatabaseUrl() {
-  let url = process.env.DATABASE_URL?.trim() || '';
+function getCleanDatabaseUrl(): string {
+  const rawUrl = process.env.DATABASE_URL;
+  if (!rawUrl) {
+    throw new Error('DATABASE_URL environment variable is not set');
+  }
+  
+  let url = rawUrl.trim();
+  url = url.replace(/[\r\n\t\x00-\x1F\x7F]/g, '');
+  url = url.replace(/^['"]|['"]$/g, '');
+  
   if (url.includes('channel_binding=')) {
     url = url.replace(/[&?]channel_binding=[^&]*/g, '');
     url = url.replace(/\?$/, '').replace(/&&/g, '&').replace(/\?&/g, '?');
   }
-  return url;
+  
+  try {
+    const parsed = new URL(url);
+    if (parsed.protocol !== 'postgresql:' && parsed.protocol !== 'postgres:') {
+      throw new Error('Invalid protocol');
+    }
+    return parsed.toString();
+  } catch {
+    if (!url.startsWith('postgresql://') && !url.startsWith('postgres://')) {
+      throw new Error('DATABASE_URL must start with postgresql:// or postgres://');
+    }
+    return url;
+  }
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
